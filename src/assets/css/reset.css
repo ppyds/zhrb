@@ -1,0 +1,84 @@
+@charset "utf-8";
+* {
+  margin: 0;
+  padding: 0
+}
+
+body, dd, dl, h1, h2, h3, h4, h5, h6, input, ol, p, ul {
+  margin: 0;
+  padding: 0
+}
+
+em, i {
+  font-style: normal
+}
+
+li {
+  list-style: none
+}
+
+b, h1, h2, h3, h4, h5, h6, strong, th {
+  font-weight: 400
+}
+
+a {
+  outline: 0;
+  text-decoration: none
+}
+
+img {
+  border: none;
+  vertical-align: top
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+td, th {
+  text-align: left;
+  vertical-align: top
+}
+
+input {
+  outline: 0;
+  border: none;
+  background-color: transparent;
+  font-family: inherit
+}
+
+textarea {
+  outline: 0;
+  resize: none;
+  overflow: auto
+}
+
+body {
+  font-family: Arial, "微软雅黑", Helvetica, sans-serif;
+  font-size: .1875rem;
+  line-height: 1;
+  -webkit-text-size-adjust: 100% !important
+}
+
+a, button, input, select, textarea {
+  -webkit-tap-highlight-color: transparent
+}
+
+.clearfix {
+  zoom: 1
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both
+}
+
+.fl {
+  float: left
+}
+
+.fr {
+  float: right
+}
