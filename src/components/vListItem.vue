@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'/info/'+data.id">
+  <router-link class="a" :to="'/info/'+data.id">
     <div class="item">
       <div class="left" :style="{paddingTop:data.title.length>14?0:'16px'}">
         <h3>{{data.title}}</h3>

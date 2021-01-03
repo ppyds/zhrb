@@ -23,11 +23,14 @@ let getters = {
 let actions = {
 
   async getNewsInfo(context, id) {
+    if (this.oldId && id===this.oldId)
+      return;
     this.commit("newsInfo/setIsloading", true);
     context.commit("setNewsInfo", []);
     const res = await getNewsInfo(id);
     context.commit("setNewsInfo", res);
-    isLoading.call(this, res.css[0])
+    isLoading.call(this, res.css[0]);
+    this.oldId = id;
   }
 }
 

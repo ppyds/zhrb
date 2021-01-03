@@ -1,31 +1,29 @@
 <template>
-  <div id="home_box">
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <div id="home">
-          <div class="header">
-            <v-header :date="toDay"></v-header>
-          </div>
-          <div class="banner">
-            <v-banner></v-banner>
-          </div>
-          <div class="list_box" v-for="item in list">
-            <time v-if="item.time  && toDay.timerStr !== item.time">
+  <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <div id="home">
+        <div class="header">
+          <v-header :date="toDay"></v-header>
+        </div>
+        <div class="banner">
+          <v-banner></v-banner>
+        </div>
+        <div class="list_box" v-for="item in list">
+          <time v-if="item.time">
             <span>{{
                 item.time.slice(0, 4) + " 年 " + item.time.slice(4, 6) + " 月 " + item.time.slice(6, 8) + " 日 "
               }}</span>
-            </time>
-            <v-list-item v-for="i in item.list" :data="i"></v-list-item>
-          </div>
+          </time>
+          <v-list-item v-for="i in item.list" :data="i"></v-list-item>
         </div>
-      </van-list>
-    </van-pull-refresh>
-  </div>
+      </div>
+    </van-list>
+  </van-pull-refresh>
 </template>
 
 <script>
@@ -33,6 +31,7 @@ import vHeader from "./components/vHeader";
 import vBanner from "./components/vBanner";
 import vListItem from "../../components/vListItem";
 import {mapActions, mapGetters, mapMutations} from "vuex";
+import store from "../../store";
 
 export default {
   name: "home",
@@ -46,8 +45,7 @@ export default {
       refreshing: false,
       toDay: {
         day: '01',
-        month: '1',
-        timerStr: ""
+        month: '1'
       }
     };
   },
@@ -66,7 +64,8 @@ export default {
       "getOldList": "home/getOldList"
     }),
     ...mapMutations({
-      setIndex:"home/setIndex"
+      setIndex: "home/setIndex",
+      setTop: "home/setTop"
     }),
     async onLoad() {
       const date = this.getTime(24 * 60 * 60 * 1000);
@@ -90,25 +89,24 @@ export default {
   computed: {
     ...mapGetters({
       list: "home/list",
-      index:"home/index"
+      index: "home/index"
     })
   },
   mounted() {
     this.getTodayList();
-    const date = this.getTime(24 * 60 * 60 * 1000);
-    const timerStr = zero(date.getFullYear()) + zero(date.getMonth() + 1) + zero(date.getDate())
+    const date = this.getTime();
     this.toDay.day = zero(date.getDate());
-    this.toDay.month = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"][date.getMonth()]
-    this.timerStr = timerStr;
+    this.toDay.month = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"][date.getMonth()];
+    document.getElementById('page').scrollTop = store.state.top[this.$route.path];
   }
 }
 
 function zero(num) {
-  if (num < 10) {
+  if (num < 10)
     return "0" + num
-  } else {
-    return "" + num
-  }
+  else
+    return "" + num;
+
 }
 </script>
 
@@ -152,7 +150,9 @@ time:after {
   margin-top: -1px;
   z-index: 0;
 }
-
+.active{
+  opacity: .7;
+}
 time span {
   height: 38px;
   display: inline-block;

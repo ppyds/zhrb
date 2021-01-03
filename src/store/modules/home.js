@@ -15,7 +15,8 @@ let mutations = {
   },
   setIndex(state, num) {
     state.index = num;
-  }
+  },
+
 
 }
 let getters = {
@@ -27,7 +28,8 @@ let getters = {
   },
   index(state) {
     return state.index;
-  }
+  },
+
 }
 let actions = {
   getTodayList(context) {
@@ -35,7 +37,6 @@ let actions = {
       return;
     }
     getNowNews().then(res => {
-
       context.commit("setBanner", res.top_stories);
       context.commit("setList", [...context.state.list, {time: "", list: res.stories}]);
     });

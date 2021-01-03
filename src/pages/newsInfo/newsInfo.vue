@@ -1,66 +1,73 @@
 <template>
   <div id="info">
-    <van-icon class="back" @click="back" name="arrow-left" />
+    <van-icon class="back" @click="back" name="arrow-left"/>
     <div v-if="!isLoading">
       <div class="img_box">
         <top-img :data="newsInfo"></top-img>
       </div>
 
-      <link rel="stylesheet"  v-for="item in newsInfo.css" :href="item">
+      <link rel="stylesheet" v-for="item in newsInfo.css" :href="item">
       <div class="content" v-html="newsInfo.body">
       </div>
     </div>
     <van-loading class="loading" size="50vw" v-if="isLoading" vertical>加载中...</van-loading>
   </div>
+
 </template>
 
 <script>
 import topImg from "../../components/topImg";
 import {mapActions, mapGetters} from "vuex";
+import store from "../../store";
 
 export default {
   name: "newsInfo",
-  components:{
+  components: {
     topImg
   },
-  methods:{
+  methods: {
     ...mapActions({
-      "getNewsInfo":"newsInfo/getNewsInfo"
+      "getNewsInfo": "newsInfo/getNewsInfo"
     }),
-    back(){
+    back() {
       this.$router.go(-1);
     }
   },
-  mounted() {
-    this.getNewsInfo(this.$route.params.id);
-
+  async mounted() {
+    await this.getNewsInfo(this.$route.params.id);
+    //报存上一次的浏览进度
+    document.getElementById('page').scrollTop = store.state.top[this.$route.path];
   },
-  computed:{
+  computed: {
     ...mapGetters({
-      "newsInfo":"newsInfo/newsInfo",
-      "isLoading":"newsInfo/isLoading"
+      "newsInfo": "newsInfo/newsInfo",
+      "isLoading": "newsInfo/isLoading"
     })
   }
 }
 </script>
 
 <style scoped>
-.img_box{
+.img_box {
   position: relative;
 }
->>>.headline{
+
+>>> .headline {
   display: none !important;
 }
->>>.view-more{
+
+>>> .view-more {
   display: none !important;
 }
-.loading{
+
+.loading {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%);
 }
-.back{
+
+.back {
   font-size: 40px;
   position: fixed;
   z-index: 3;
