@@ -22,7 +22,8 @@
               }}</span>
             </time>
           </van-sticky>
-          <v-list-item @click.native="userRead(item.list[index])"  v-for="(i,index) in item.list" :data="i"></v-list-item>
+          <v-list-item @click.native="userRead(item.list[index])" v-for="(i,index) in item.list"
+                       :data="i"></v-list-item>
         </div>
       </div>
     </van-list>
@@ -61,7 +62,7 @@ export default {
       }
 
     },
-    userRead(data){
+    userRead(data) {
       data.isRead = true;
     },
     ...mapActions({
@@ -73,7 +74,7 @@ export default {
       setTop: "home/setTop"
     }),
     async onLoad() {
-      const date = this.getTime(24 * 60 * 60 * 1000);
+      const date = this.getTime(true);
       const timerStr = zero(date.getFullYear()) + zero(date.getMonth() + 1) + zero(date.getDate())
       await this.getOldList(timerStr);
       this.refreshing = false;
@@ -143,11 +144,13 @@ function zero(num) {
   /*box-shadow: var(--bg-color-3) 0 5px 0 0;*/
   /*background: greenyellow;*/
 }
->>> .van-sticky--fixed time span{
+
+>>> .van-sticky--fixed time span {
   font-size: 20px;
   color: var(--font-color-3);
   padding-left: 0;
 }
+
 time {
   display: block;
   height: 38px;
