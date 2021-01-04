@@ -3,7 +3,7 @@ import {getNowNews, getOldNews} from "../../utils/http";
 let state = {
   banner: [],
   list: [],
-  index: 0 //用于判断该加载哪天的数据
+  index: 1 //用于判断该加载哪天的数据
 
 }
 let mutations = {
@@ -38,7 +38,7 @@ let actions = {
     }
     getNowNews().then(res => {
       context.commit("setBanner", res.top_stories);
-      context.commit("setList", [...context.state.list, {time: "", list: res.stories}]);
+      context.commit("setList", [{time: "", list: res.stories}]);
     });
   },
   async getOldList(context, timer) {

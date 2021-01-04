@@ -14,11 +14,14 @@
           <v-banner></v-banner>
         </div>
         <div class="list_box" v-for="item in list">
-          <time v-if="item.time">
+
+          <van-sticky :offset-top="'17.067vw'" class="time_box">
+            <time v-if="item.time">
             <span>{{
                 item.time.slice(0, 4) + " 年 " + item.time.slice(4, 6) + " 月 " + item.time.slice(6, 8) + " 日 "
               }}</span>
-          </time>
+            </time>
+          </van-sticky>
           <v-list-item v-for="i in item.list" :data="i"></v-list-item>
         </div>
       </div>
@@ -56,7 +59,6 @@ export default {
       } else {
         return new Date();
       }
-
 
     },
     ...mapActions({
@@ -121,6 +123,7 @@ function zero(num) {
   width: 100vw;
   z-index: 2;
   background: var(--bg-color-1);
+  /*box-shadow: var(--bg-color-2) 0 5px 5px 0;*/
 }
 
 .banner {
@@ -131,6 +134,17 @@ function zero(num) {
   padding: 0 16px;
 }
 
+>>> .van-sticky--fixed * {
+  padding: 0 16px;
+  background: var(--bg-color-2);
+  /*box-shadow: var(--bg-color-3) 0 5px 0 0;*/
+  /*background: greenyellow;*/
+}
+>>> .van-sticky--fixed time span{
+  font-size: 20px;
+  color: var(--font-color-3);
+  padding-left: 0;
+}
 time {
   display: block;
   height: 38px;
@@ -149,9 +163,6 @@ time:after {
   top: 50%;
   margin-top: -1px;
   z-index: 0;
-}
-.active{
-  opacity: .7;
 }
 time span {
   height: 38px;
