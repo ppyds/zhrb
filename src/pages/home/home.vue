@@ -22,7 +22,7 @@
               }}</span>
             </time>
           </van-sticky>
-          <v-list-item v-for="i in item.list" :data="i"></v-list-item>
+          <v-list-item @click.native="userRead(item.list[index])"  v-for="(i,index) in item.list" :data="i"></v-list-item>
         </div>
       </div>
     </van-list>
@@ -60,6 +60,9 @@ export default {
         return new Date();
       }
 
+    },
+    userRead(data){
+      data.isRead = true;
     },
     ...mapActions({
       "getTodayList": "home/getTodayList",
@@ -164,6 +167,8 @@ time:after {
   margin-top: -1px;
   z-index: 0;
 }
+
+
 time span {
   height: 38px;
   display: inline-block;

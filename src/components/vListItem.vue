@@ -1,6 +1,6 @@
 <template>
   <router-link class="a" :to="'/info/'+data.id">
-    <div class="item">
+    <div  :class="{active:data.isRead,item:true}">
       <div class="left" :style="{paddingTop:data.title.length>14?0:'16px'}">
         <h3>{{data.title}}</h3>
         <p>{{ data.hint }}</p>
@@ -55,4 +55,8 @@ export default {
     border-radius: 5px;
     overflow: hidden;
   }
+  .active {
+    opacity: .5;
+  }
+
 </style>

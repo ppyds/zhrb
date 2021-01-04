@@ -38,11 +38,17 @@ let actions = {
     }
     getNowNews().then(res => {
       context.commit("setBanner", res.top_stories);
+      res.stories.forEach(item =>{
+        item.isRead = false;
+      })
       context.commit("setList", [{time: "", list: res.stories}]);
     });
   },
   async getOldList(context, timer) {
     const res = await getOldNews(timer);
+    res.stories.forEach(item =>{
+      item.isRead = false;
+    })
     context.commit("setList", [...context.state.list, {time: timer, list: res.stories}]);
   }
 }
